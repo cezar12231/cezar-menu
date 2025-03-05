@@ -164,18 +164,29 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/Lucasfin000/SpaceHub/
  end })
 
 
+
+
+Tabs.Main:AddButton({ Title = "esp line ", Callback = function() 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/cezar12231/TITAR-DANO-1/refs/heads/main/README.md"))()
+ end })
+
+
+
+
+
+
 local Tabs = {
     Main = Window:AddTab({ Title = "auto fram" }),
     Settings = Window:AddTab({ Title = "by cezar", Icon = "by cezar" })
 }
   
 
-Tabs.Main:AddButton({ Title = "auto lixo", Callback = function() 
-
+Tabs.Main:AddButton({ Title = "auto gas", Callback = function() 
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Rafaasxs/Nexus-Menu-/refs/heads/main/tesao'))()
 end })
 
 
-Tabs.Main:AddButton({ Title = "auto plantas", Callback = function() 
+Tabs.Main:AddButton({ Title = "auto plantas menu ", Callback = function() 
 loadstring(game:HttpGet('https://raw.githubusercontent.com/minicityrp/main/refs/heads/main/mobile'))()
  end })
 

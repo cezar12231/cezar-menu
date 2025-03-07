@@ -171,8 +171,72 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/cezar12231/TITAR-DANO
  end })
 
 
+Tabs.Main:AddButton({ Title = "esp vida ", Callback = function() 
 
+-- Serviço necessário
+local players = game:GetService("Players")
+local runService = game:GetService("RunService")
+local localPlayer = players.LocalPlayer
+local camera = workspace.CurrentCamera
 
+-- Função para criar uma barra de vida
+local function createHealthBar(target)
+    local billboardGui = Instance.new("BillboardGui")
+    local healthBar = Instance.new("Frame")
+    local healthFill = Instance.new("Frame")
+
+    -- Configurando o BillboardGui
+    billboardGui.Parent = target.Character.Head
+    billboardGui.Size = UDim2.new(4, 0, 0.5, 0)
+    billboardGui.Adornee = target.Character.Head
+    billboardGui.AlwaysOnTop = true
+
+    -- Configurando o contêiner da barra de vida
+    healthBar.Parent = billboardGui
+    healthBar.BackgroundColor3 = Color3.new(0, 0, 0) -- Fundo preto
+    healthBar.Size = UDim2.new(1, 0, 1, 0)
+    healthBar.Position = UDim2.new(0, 0, 0, 0)
+
+    -- Configurando o preenchimento da barra de vida
+    healthFill.Parent = healthBar
+    healthFill.BackgroundColor3 = Color3.new(0, 1, 0) -- Verde
+    healthFill.Size = UDim2.new(1, 0, 1, 0)
+    healthFill.Position = UDim2.new(0, 0, 0, 0)
+
+    -- Atualizando a barra de vida em tempo real
+    runService.RenderStepped:Connect(function()
+        if target and target.Character and target.Character:FindFirstChild("Humanoid") then
+            local humanoid = target.Character.Humanoid
+            local health = humanoid.Health / humanoid.MaxHealth
+            healthFill.Size = UDim2.new(health, 0, 1, 0)
+            healthFill.BackgroundColor3 = Color3.new(1 - health, health, 0) -- Muda de verde para vermelho
+        end
+    end)
+end
+
+-- Adiciona barras de vida aos jogadores
+local function addHealthESP()
+    for _, player in pairs(players:GetPlayers()) do
+        if player ~= localPlayer and player.Character and player.Character:FindFirstChild("Head") then
+            createHealthBar(player)
+        end
+    end
+end
+
+-- Atualiza para novos jogadores
+players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function()
+        wait(1) -- Aguarda o personagem carregar
+        if player ~= localPlayer then
+            createHealthBar(player)
+        end
+    end)
+end)
+
+-- Ativa o ESP para jogadores existentes
+addHealthESP()
+ 
+end })
 
 
 local Tabs = {
